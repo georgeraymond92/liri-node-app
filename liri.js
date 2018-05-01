@@ -2,6 +2,7 @@ require("dotenv").config();
 var keys = require('./keys.js');;
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
+// Had to use this to be able to see the full json object in my console logs so i could proporly parse the objects
 var util = require('util');
 var fs = require("fs");
 var request = require('request');
