@@ -14,6 +14,7 @@ var movieName = "";
 var params = {screen_name: 'GeorgeMRaymond'};
 
 switch(argument){
+
     case 'my-tweets':
 
         twitterClient.get('statuses/user_timeline', params, function(error, tweets, response) {
@@ -27,27 +28,54 @@ switch(argument){
             }
         });
     break;
+
     case 'spotify-this-song':
-        for (i = 3;i < process.argv.length; i++) {
-            songName += process.argv[i] + " ";
-        };
-        spotifyClient.search({type:"track", query:songName}, function(error, data){
-            if(error) {
-                console.log('Error occurred: ' + error);
-            }
-            var songs = data.tracks.items;
-            for(var i=0; i<songs.length; i++) {
-                console.log(i);
-                // console.log(util.inspect(songs[i], false, null));
-                console.log('artist(s): ' + songs[i].artists.map(function(artist){
-                    return artist.name;
-                }));
-                console.log("Song Name: " + songs[i].name);
-                console.log('preview song: ' + songs[i].preview_url);
-                console.log("album: " + songs[i].album.name);
-            }
-        });
+        
+        if (process.argv.length === 3) {
+            
+            spotifyClient.search({type:"track", query:'the sign'}, function(error, data){
+                if(error) {
+                    console.log('Error occurred: ' + error);
+                }
+    
+                var songs = data.tracks.items;
+                for(var i=0; i<songs.length; i++) {
+                    console.log(i);
+                    console.log("Song Name: " + songs[i].name);
+                    console.log('artist(s): ' + songs[i].artists.map(function(artist){
+                        return artist.name;
+                    }));
+                    console.log('preview song: ' + songs[i].preview_url);
+                    console.log("album: " + songs[i].album.name);
+                }
+            });
+
+        } else {
+
+            for (i = 3;i < process.argv.length; i++) {
+                songName += process.argv[i] + " ";
+            };
+        
+            spotifyClient.search({type:"track", query:songName}, function(error, data){
+                if(error) {
+                    console.log('Error occurred: ' + error);
+                }
+
+                var songs = data.tracks.items;
+                for(var i=0; i<songs.length; i++) {
+                    console.log(i);
+                    console.log("Song Name: " + songs[i].name);
+                    console.log('artist(s): ' + songs[i].artists.map(function(artist){
+                        return artist.name;
+                    }));
+                    console.log('preview song: ' + songs[i].preview_url);
+                    console.log("album: " + songs[i].album.name);
+                }
+            });
+        }
+
     break;
+
     case "movie-this":
     
         for (i = 3;i < process.argv.length; i++) {
@@ -73,27 +101,30 @@ switch(argument){
         fs.readFile('random.txt', 'utf8', function (err, data){
             if (err) throw err;
             var dataArr = data.split(",");
-            console.log(dataArr);
+            argument = dataArr[0];
+            songName = dataArr[1];
+            console.log(argument);
+            console.log(songName);
+
+            spotifyClient.search({type:"track", query:songName}, function(error, data){
+                if(error) {
+                    console.log('Error occurred: ' + error);
+                }
+                var songs = data.tracks.items;
+                for(var i=0; i<songs.length; i++) {
+                    console.log(i);
+                    console.log("Song Name: " + songs[i].name);
+                    console.log('Artist(s): ' + songs[i].artists.map(function(artist){
+                        return artist.name;
+                    }));
+                    console.log('Preview Song Here: ' + songs[i].preview_url);
+                    console.log("Album: " + songs[i].album.name);
+                }
+            });
 
         });
         
-        // spotifyClient.search({type:"track", query:songName}, function(error, data){
-        //     if(error) {
-        //         console.log('Error occurred: ' + error);
-        //     }
-        //     var songs = data.tracks.items;
-        //     for(var i=0; i<songs.length; i++) {
-        //         console.log(i);
-        //         // console.log(util.inspect(songs[i], false, null));
-        //         console.log('artist(s): ' + songs[i].artists.map(function(artist){
-        //             return artist.name;
-        //         }));
-        //         console.log("Song Name: " + songs[i].name);
-        //         console.log('preview song: ' + songs[i].preview_url);
-        //         console.log("album: " + songs[i].album.name);
-        //     }
-        // });
-
+    
     break;
 
 };
