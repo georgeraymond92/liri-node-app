@@ -1,3 +1,4 @@
+// require all of my needed modules and define variables
 require("dotenv").config();
 var keys = require('./keys.js');;
 var Twitter = require('twitter');
@@ -13,7 +14,11 @@ var songName = "";
 var movieName = "";
 var params = {screen_name: 'GeorgeMRaymond'};
 
+// Created a switch to determine what code to execute depending on the argument provided
+
 switch(argument){
+
+    // Twitter call
 
     case 'my-tweets':
 
@@ -29,11 +34,13 @@ switch(argument){
         });
     break;
 
+    // Spotify call
+
     case 'spotify-this-song':
         
         if (process.argv.length === 3) {
             
-            spotifyClient.search({type:"track", query:'the sign'}, function(error, data){
+            spotifyClient.search({type:"track", query:'the sign ace of base'}, function(error, data){
                 if(error) {
                     console.log('Error occurred: ' + error);
                 }
@@ -76,6 +83,8 @@ switch(argument){
 
     break;
 
+    // OMDB call using request
+
     case "movie-this":
     
         for (i = 3;i < process.argv.length; i++) {
@@ -97,7 +106,11 @@ switch(argument){
 
 
     break;
+
+    // do-what-it-says reads the content of random.txt then calls out to the spotify api 
+
     case "do-what-it-says":
+
         fs.readFile('random.txt', 'utf8', function (err, data){
             if (err) throw err;
             var dataArr = data.split(",");
