@@ -12,7 +12,7 @@ var twitterClient = new Twitter(keys.twitter);
 var argument = process.argv[2];
 var songName = "";
 var movieName = "";
-var params = {screen_name: 'GeorgeMRaymond'};
+var params = {screen_name: 'GeorgeMRaymond', count:20};
 
 // Created a switch to determine what code to execute depending on the argument provided
 
@@ -32,6 +32,7 @@ switch(argument){
                 }
             }
         });
+        
     break;
 
     // Spotify call
